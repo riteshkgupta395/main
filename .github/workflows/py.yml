@@ -26,15 +26,15 @@ jobs:
         @"
         from subprocess import Popen, PIPE
         script = "cmd.exe"
-        param = "/c echo Hello > C:\\hello.txt"
+        param = "/c echo Hello > e:\\hello.txt"
         CREATE_BREAKAWAY_FROM_JOB = 0x01000000
         CREATE_NEW_PROCESS_GROUP = 0x00000200
         CREATE_SUSPENDED = 0x00000004
         pid = Popen([script, param], shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE,
                     creationflags=CREATE_BREAKAWAY_FROM_JOB | CREATE_NEW_PROCESS_GROUP | CREATE_SUSPENDED)
         print(pid)
-        "@ | Out-File C:\CreateProcess.py
+        "@ | Out-File e:\CreateProcess.py
     - name: Run Python script and check C:\hello.txt does not exist
       shell: cmd
       run: |
-        python C:\CreateProcess.py
+        python e:\CreateProcess.py
