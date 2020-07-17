@@ -18,7 +18,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
-    runs-on: 'self-hosted'
+    runs-on: 'windows-latest'
 
     steps:
     - name: Create Python script
@@ -35,5 +35,6 @@ jobs:
         print(pid)
         "@ | Out-File C:\CreateProcess.py
     - name: Run Python script and check C:\hello.txt does not exist
+      shell: cmd
       run: |
         python C:\CreateProcess.py
