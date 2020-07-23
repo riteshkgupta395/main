@@ -45,5 +45,11 @@ jobs:
              break
            fi
          done
-
+    - uses: 8398a7/action-slack@v3
+      with:
+        fields: workflow
+        status: ${{ job.status }}
+        text: GO TO https://order.ikea.com/us/en/checkout/delivery
+      env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
        
