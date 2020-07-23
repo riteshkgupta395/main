@@ -1,0 +1,49 @@
+# This is a basic workflow to help you get started with Actions
+
+name: IKEA
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+
+    # Runs a set of commands using the runners shell
+    - run: |
+        while :
+        do
+          output=$(curl 'https://ww8.ikea.com/clickandcollect/us/receive/' \
+            -X POST \
+            -H 'Origin: https://order.ikea.com' \
+            -H 'Connection: keep-alive' \
+            -H 'Accept-Language: en-US,en;q=0.9' \
+            -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36' \
+            -H 'Content-Type: application/x-www-form-urlencoded' \
+            -H 'Host: ww8.ikea.com' \
+            -H 'X-Proxyman-Repeated-ID: 2503222E' \
+            -H 'Referer: https://order.ikea.com/us/en/checkout/delivery/' \
+            -H 'Sec-Fetch-Mode: cors' \
+            -H 'Sec-Fetch-Dest: empty' \
+            -H 'Content-Length: 1157' \
+            -H 'Accept: */*' \
+            -H 'Sec-Fetch-Site: same-site' \
+            -d 'payload={"selectedService":"fetchlocation","customerView":"desktop","locale":"en_US","selectedServiceValue":"f7265603-9c71-46aa-ad5d-d605ef09de7a","slId":"1241241241","articles":[{"articleNo":"10350998","count":2},{"articleNo":"10458418","count":1},{"articleNo":"20213883","count":1},{"articleNo":"20219936","count":1},{"articleNo":"20260394","count":1},{"articleNo":"30091763","count":1},{"articleNo":"30208348","count":1},{"articleNo":"40054538","count":1},{"articleNo":"40199287","count":1},{"articleNo":"40258125","count":1},{"articleNo":"40391351","count":1},{"articleNo":"40420075","count":2},{"articleNo":"40451057","count":1},{"articleNo":"40457144","count":1},{"articleNo":"50382087","count":1},{"articleNo":"60148678","count":1},{"articleNo":"70186090","count":1},{"articleNo":"70460927","count":1},{"articleNo":"80417311","count":2},{"articleNo":"80457161","count":1},{"articleNo":"90362407","count":1},{"articleNo":"90423929","count":1},{"articleNo":"90460926","count":1},{"articleNo":"00286917","count":1},{"articleNo":"00333570","count":1}]}&backUrl=https://order.ikea.com/us/en/checkout/delivery/&hmac=89bf0bde02c7b16e905818b880cbe8291e53e5a3')
+           echo $output
+           if [[ $output == *"Probably you have no handover or collection capacity set"* ]]; then
+             echo "Continue retry in 120s..."
+             sleep -seconds 120
+           else
+             break
+           fi
+         done
+
+       
