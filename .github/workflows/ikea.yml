@@ -40,7 +40,7 @@ jobs:
            echo $output
            if [[ $output == *"Probably you have no handover or collection capacity set"* ]]; then
              echo "Continue retry in 120s..."
-             sleep -seconds 120
+             sleep 120s
            else
              break
            fi
