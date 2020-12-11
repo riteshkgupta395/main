@@ -32,6 +32,7 @@ jobs:
       - name: GitHub Script
         uses: actions/github-script@v3.1.0
         with:
+          debug: true
           # The script to run
           script: |
             var artifacts = await github.actions.listWorkflowRunArtifacts({
@@ -39,4 +40,14 @@ jobs:
                repo: 'main',
                run_id: ${{github.event.workflow_run.id }},
             });
-            console.log(artifacts.data);
+            var testArtifact = artifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "Test"
+            })[0];
+            console.log(artifacts);
+            var downloadUrl = await github.actions.downloadArtifact({
+               owner: 'tingluohuang',
+               repo: 'main',
+               artifact_id: artifacts.id,
+               archive_format: 'zip',
+            });
+            console.log(downloadUrl.data);
