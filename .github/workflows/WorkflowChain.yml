@@ -25,4 +25,12 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: cat $GITHUB_EVENT_PATH
+        run: |
+          printenv|sort
+          cat $GITHUB_EVENT_PATH
+      
+      - uses: actions/download-artifact@v2
+        with:
+          name: Test
+        env:
+          GITHUB_RUN_ID: ${{github.event.workflow_run.id }}
