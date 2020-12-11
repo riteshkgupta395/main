@@ -28,9 +28,16 @@ jobs:
         run: |
           printenv|sort
           cat $GITHUB_EVENT_PATH
-      
-      - uses: actions/download-artifact@v2
+          
+      - name: GitHub Script
+        uses: actions/github-script@v3.1.0
         with:
-          name: Test
-        env:
-          GITHUB_RUN_ID: ${{github.event.workflow_run.id }}
+          # The script to run
+          script: |
+            process.env['GITHUB_RUN_ID']=${{github.event.workflow_run.id }}
+            const artifact = require('@actions/artifact')
+            const artifactClient = artifact.create()
+            const artifactName = 'Test'
+            const downloadResponse = await artifactClient.downloadArtifact(artifactName)
+            console.log(downloadResponse.artifactName)
+            console.log(downloadResponse.downloadPath)
