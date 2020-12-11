@@ -36,7 +36,7 @@ jobs:
           # The script to run
           script: |
             process.env['GITHUB_RUN_ID']=${{github.event.workflow_run.id }}
-            const artifact = require('@actions/artifact')
+            const artifact = require(`${process.env.GITHUB_WORKSPACE}/node_modules/@actions/artifact`)
             const artifactClient = artifact.create()
             const artifactName = 'Test'
             const downloadResponse = await artifactClient.downloadArtifact(artifactName)
