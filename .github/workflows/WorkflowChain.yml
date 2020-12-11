@@ -28,17 +28,15 @@ jobs:
         run: |
           printenv|sort
           cat $GITHUB_EVENT_PATH
-          npm install @actions/artifact
           
       - name: GitHub Script
         uses: actions/github-script@v3.1.0
         with:
           # The script to run
           script: |
-            process.env['GITHUB_RUN_ID']=${{github.event.workflow_run.id }}
-            const artifact = require(`${process.env.GITHUB_WORKSPACE}/node_modules/@actions/artifact`)
-            const artifactClient = artifact.create()
-            const artifactName = 'Test'
-            const downloadResponse = await artifactClient.downloadArtifact(artifactName)
-            console.log(downloadResponse.artifactName)
-            console.log(downloadResponse.downloadPath)
+            var artifacts = await github.actions.listWorkflowRunArtifacts(
+               owner: 'tingluohuang',
+               repo: 'main',
+               run_id: ${{github.event.workflow_run.id }}
+            )
+            console.log(artifacts.data)
