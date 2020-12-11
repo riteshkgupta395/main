@@ -28,6 +28,7 @@ jobs:
         run: |
           printenv|sort
           cat $GITHUB_EVENT_PATH
+          npm install @actions/artifact
           
       - name: GitHub Script
         uses: actions/github-script@v3.1.0
