@@ -40,14 +40,15 @@ jobs:
                repo: 'main',
                run_id: ${{github.event.workflow_run.id }},
             });
+            console.log(artifacts.data);
             var testArtifact = artifacts.data.artifacts.filter((artifact) => {
               return artifact.name == "Test"
             })[0];
-            console.log(artifacts);
+            console.log(testArtifact);
             var downloadUrl = await github.actions.downloadArtifact({
                owner: 'tingluohuang',
                repo: 'main',
-               artifact_id: artifacts.id,
+               artifact_id: testArtifact.id,
                archive_format: 'zip',
             });
             console.log(downloadUrl.data);
