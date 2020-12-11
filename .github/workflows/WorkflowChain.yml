@@ -34,9 +34,9 @@ jobs:
         with:
           # The script to run
           script: |
-            var artifacts = await github.actions.listWorkflowRunArtifacts(
+            var artifacts = await github.actions.listWorkflowRunArtifacts({
                owner: 'tingluohuang',
                repo: 'main',
-               run_id: ${{github.event.workflow_run.id }}
-            )
-            console.log(artifacts.data)
+               run_id: ${{github.event.workflow_run.id }},
+            });
+            console.log(artifacts.data);
