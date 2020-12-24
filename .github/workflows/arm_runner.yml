@@ -24,6 +24,6 @@ jobs:
           docker run --rm --privileged multiarch/qemu-user-static:register --reset
       - uses: docker://multiarch/ubuntu-core:armhf-focal
         with:
-          args: 'bash -c "./bin/installdependencies.sh && ./config.sh --help && ./config.sh --unattended --url ${{github.event.repository.html_url}} --token ${{secrets.RUNNER_REGISTER_TOKEN}} --replace && ./run.sh --once && ./config.sh remove --token ${{secrets.RUNNER_REGISTER_TOKEN}}"'
+          args: 'bash -c "ldd ./bin/*.so && ./bin/installdependencies.sh && ldd ./bin/*.so && ./config.sh --help && ./config.sh --unattended --url ${{github.event.repository.html_url}} --token ${{secrets.RUNNER_REGISTER_TOKEN}} --replace && ./run.sh --once && ./config.sh remove --token ${{secrets.RUNNER_REGISTER_TOKEN}}"'
         env:
           RUNNER_ALLOW_RUNASROOT: 1
