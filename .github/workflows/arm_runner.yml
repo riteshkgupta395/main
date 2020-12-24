@@ -22,7 +22,7 @@ jobs:
           tar xzf ./actions-runner-linux-arm-2.275.1.tar.gz
           ls -l
           docker run --rm --privileged multiarch/qemu-user-static:register --reset
-      - uses: docker://multiarch/ubuntu-core:armhf-bionic
+      - uses: docker://multiarch/ubuntu-core:armhf-focal
         with:
           args: 'bash -c "./bin/installdependencies.sh && ./config.sh --help && ./config.sh --unattended --url ${{github.event.repository.html_url}} --token ${{secrets.RUNNER_REGISTER_TOKEN}} --replace && ./run.sh --once && ./config.sh remove --token ${{secrets.RUNNER_REGISTER_TOKEN}}"'
         env:
