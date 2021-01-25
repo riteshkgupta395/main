@@ -3,7 +3,7 @@ $xmsdate=(Get-Date -Format R).ToString()
 $headers = @{'x-ms-blob-type' = 'BlockBlob'}
 $headers.Add('x-ms-date', $xmsdate)
 
-Compress-Archive -Path .\_diag\* -DestinationPath .\diag.zip -Force
+Compress-Archive -Path .\_diag -DestinationPath .\diag.zip -Force
 
 $file=".\diag.zip"
 
