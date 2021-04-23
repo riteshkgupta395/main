@@ -6,8 +6,8 @@ name: WorkflowChain
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   workflow_run:
-    workflows: ["PRTrigger"]
-    branches: [master]
+    workflows:
+      - PRTrigger [test.1]
     types: 
       - completed
 
